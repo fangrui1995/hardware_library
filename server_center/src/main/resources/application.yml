@@ -1,0 +1,87 @@
+base:
+  config:
+    mysql:
+      #      hostname: localhost
+      hostname: 139.224.217.4
+      port: 3306
+    redis:
+      hostname: 127.0.0.1
+      port: 6379
+      password: 123456
+
+jasypt:
+  encryptor:
+    password: hbwt@2020
+
+spring:
+  application:
+    name: home
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${base.config.mysql.hostname}:${base.config.mysql.port}/hardware_library?useUnicode=true&characterEncoding=utf-8&serverTimezone=Hongkong&useSSL=false
+    username: root
+    password: deepcore
+    hikari:
+      minimum-idle: 5
+      #一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      #一个连接的生命时长（毫秒），1800000 超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+      max-lifetime: 30000
+      #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:90秒
+      connection-timeout: 90000
+      connection-test-query: SELECT 1
+  redis:
+    host: ${base.config.redis.hostname}
+    port: ${base.config.redis.port}
+    password: ${base.config.redis.password}
+    lettuce:
+      pool:
+        #最小空闲
+        min-idle: 0
+        #最大空闲
+        max-idle: 8
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: -1ms
+        #最大连接数
+        max-active: 8
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+
+server:
+  port: 8881
+  servlet:
+    context-path: /api
+  max-http-header-size: 100MB
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+mybatis:
+  type-aliases-package: com.hl.hardwareLibrary.dao.domain
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    object-wrapper-factory: com.hl.hardwareLibrary.configuration.mybatis.MapWrapperFactory
+    call-setters-on-nulls: true
+
+
+
+logging:
+  level:
+    com.ahsh.home.dao.mapper: debug
+
+

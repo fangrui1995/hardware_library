@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hl.hardwareLibrary.dao.mapper.ComponentReservationMapper">
+  <resultMap id="BaseResultMap" type="com.hl.hardwareLibrary.dao.domain.ComponentReservation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="component_id" jdbcType="VARCHAR" property="componentId" />
+    <result column="component_name" jdbcType="VARCHAR" property="componentName" />
+    <result column="serial_number" jdbcType="VARCHAR" property="serialNumber" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_school" jdbcType="VARCHAR" property="userSchool" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="status_info" jdbcType="INTEGER" property="statusInfo" />
+    <result column="due_date" jdbcType="TIMESTAMP" property="dueDate" />
+    <result column="return_date" jdbcType="TIMESTAMP" property="returnDate" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+</mapper>
