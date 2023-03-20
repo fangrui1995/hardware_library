@@ -16,4 +16,9 @@
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
+
+  <select id="findContentInfo" resultType="com.hl.hardwareLibrary.dao.domain.ext.ComponentView">
+    SELECT a.*,COUNT(b.serial_number) count from component a LEFT JOIN component_inventory b on a.id = b.component_id and b.status_info = '1'
+      WHERE a.status_info = '1' GROUP BY a.id
+  </select>
 </mapper>
