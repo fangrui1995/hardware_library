@@ -48,7 +48,7 @@
 
         <!--<table catalog="${jdbc.database}" tableName="ads_fin_mois_12a2_data5_mf"> -->
 
-        <table catalog="${jdbc.database}" tableName="%">
+        <table catalog="${jdbc.database}" tableName="component_user_cart">
             <!-- 默认为 false，如果设置为 true，在生成的 SQL 中，table 名字不会加上 catalog 或 schema -->
             <property name="ignoreQualifiersAtRuntime" value="true"/>
             <!-- mysql 配置 -->

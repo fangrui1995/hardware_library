@@ -8,7 +8,10 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="status_info" jdbcType="INTEGER" property="statusInfo" />
     <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />

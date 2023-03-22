@@ -2,13 +2,12 @@ package com.hl.hardwareLibrary.controller.administrator;
 
 import com.hl.hardwareLibrary.common.Result;
 import com.hl.hardwareLibrary.dao.domain.Component;
-import com.hl.hardwareLibrary.service.administrator.ComponentService;
+import com.hl.hardwareLibrary.service.ComponentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +23,13 @@ public class ComponentController {
     @GetMapping("/findContentInfo")
     public Result findContentInfo() {
         return componentService.findContentInfo();
+    }
+
+
+    @ApiOperation("查询组件详细信息")
+    @GetMapping("/findDetailsById")
+    public Result findDetailsById(@RequestParam Long id) {
+        return componentService.findDetailsById(id);
     }
 
 

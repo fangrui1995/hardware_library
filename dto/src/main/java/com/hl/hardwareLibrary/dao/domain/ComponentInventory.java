@@ -26,7 +26,7 @@ public class ComponentInventory implements Serializable {
      */
     @Column(name = "component_id")
     @ApiModelProperty("组件id")
-    private String componentId;
+    private Long componentId;
 
     /**
      * 组件名称

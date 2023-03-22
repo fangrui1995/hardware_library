@@ -11,33 +11,57 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel("")
-@Table(name = "component_reservation")
-public class ComponentReservation implements Serializable {
+@Table(name = "component_proposal")
+public class ComponentProposal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty("")
     private Long id;
 
     /**
-     * 组件id
+     * 名称
      */
-    @Column(name = "component_id")
-    @ApiModelProperty("组件id")
-    private Long componentId;
+    @ApiModelProperty("名称")
+    private String name;
 
     /**
-     * 组件名称
+     * 描述
      */
-    @Column(name = "component_name")
-    @ApiModelProperty("组件名称")
-    private String componentName;
+    @ApiModelProperty("描述")
+    private String description;
 
     /**
-     * 组件编号
+     * 网站
      */
-    @Column(name = "serial_number")
-    @ApiModelProperty("组件编号")
-    private String serialNumber;
+    @ApiModelProperty("网站")
+    private String websites;
+
+    /**
+     * 图片路径
+     */
+    @Column(name = "image_path")
+    @ApiModelProperty("图片路径")
+    private String imagePath;
+
+    /**
+     * pdf路径
+     */
+    @Column(name = "pdf_path")
+    @ApiModelProperty("pdf路径")
+    private String pdfPath;
+
+    /**
+     * 硬件类型
+     */
+    @ApiModelProperty("硬件类型")
+    private String categories;
+
+    /**
+     * 1-申请 2-同意 3-拒绝 6-删除
+     */
+    @Column(name = "status_info")
+    @ApiModelProperty("1-申请 2-同意 3-拒绝 6-删除")
+    private Integer statusInfo;
 
     /**
      * 用户id
@@ -68,25 +92,23 @@ public class ComponentReservation implements Serializable {
     private String userEmail;
 
     /**
-     * 1-申请 2-同意 3-拒绝 4-借出中 5-回收 6-删除
+     * 成本
      */
-    @Column(name = "status_info")
-    @ApiModelProperty("1-申请 2-同意 3-拒绝 4-借出中 5-回收 6-删除")
-    private Integer statusInfo;
+    @ApiModelProperty("成本")
+    private String cost;
 
     /**
-     * 计划归还时间
+     * 数量
      */
-    @Column(name = "due_date")
-    @ApiModelProperty("计划归还时间")
-    private Date dueDate;
+    @ApiModelProperty("数量")
+    private String qty;
 
     /**
-     * 实际归还时间
+     * 学生方案
      */
-    @Column(name = "return_date")
-    @ApiModelProperty("实际归还时间")
-    private Date returnDate;
+    @Column(name = "student_programme")
+    @ApiModelProperty("学生方案")
+    private String studentProgramme;
 
     @Column(name = "createTime")
     @ApiModelProperty("")

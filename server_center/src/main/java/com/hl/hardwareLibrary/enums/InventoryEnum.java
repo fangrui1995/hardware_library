@@ -1,22 +1,18 @@
 package com.hl.hardwareLibrary.enums;
 
-public enum BusinessLineEnum {
-    YWTJ(0,"投资建设"),
-    YWSD(1,"输电运检"),
-    YWBD(2,"变电运检"),
-    YWPD(3,"配电运检"),
-    YWDT(4,"调度通信"),
-    YWYJ(5,"运检综合"),
-    YWJL(6,"电能计量"),
-    YWKF(7,"客户服务"),
-    YWYZ(8,"营销综合"),
-    YWYG(9,"运营管理");
+public enum InventoryEnum {
+
+    //'1-申请 2-同意 3-拒绝 4-借出中 5-回收 6-删除',
+    STOCK(1,"在库"),
+    LEND(2,"借出"),
+    LOST(3,"丢失"),
+    DISABLE(4,"删除");
 
     private Integer key;
 
     private String value;
 
-    BusinessLineEnum(Integer key, String value) {
+    InventoryEnum(Integer key, String value) {
         this.key = key;
         this.value = value;
     }

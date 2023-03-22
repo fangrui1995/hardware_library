@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hl.hardwareLibrary.dao.mapper.ComponentMapper">
-  <resultMap id="BaseResultMap" type="com.hl.hardwareLibrary.dao.domain.Component">
+<mapper namespace="com.hl.hardwareLibrary.dao.mapper.ComponentProposalMapper">
+  <resultMap id="BaseResultMap" type="com.hl.hardwareLibrary.dao.domain.ComponentProposal">
     <!--
       WARNING - @mbg.generated
     -->
@@ -13,23 +13,14 @@
     <result column="pdf_path" jdbcType="VARCHAR" property="pdfPath" />
     <result column="categories" jdbcType="VARCHAR" property="categories" />
     <result column="status_info" jdbcType="INTEGER" property="statusInfo" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_school" jdbcType="VARCHAR" property="userSchool" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="cost" jdbcType="VARCHAR" property="cost" />
+    <result column="qty" jdbcType="VARCHAR" property="qty" />
+    <result column="student_programme" jdbcType="VARCHAR" property="studentProgramme" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
-
-  <select id="findContentInfo" resultType="com.hl.hardwareLibrary.dao.domain.ext.ComponentView">
-    SELECT a.*,COUNT(b.serial_number) count from component a LEFT JOIN component_inventory b on a.id = b.component_id and b.status_info = '1'
-      WHERE a.status_info = '1'
-    <if test="ids != null and ids.size() != 0 ">
-      AND a.id IN
-      <foreach close=")" collection="ids" item="id" open="(" separator=",">
-        #{id}
-      </foreach>
-    </if>
-      GROUP BY a.id
-  </select>
-
-  <select id="findViewById" resultType="com.hl.hardwareLibrary.dao.domain.ext.ComponentView">
-    SELECT * from component WHERE id = #{id}
-  </select>
 </mapper>

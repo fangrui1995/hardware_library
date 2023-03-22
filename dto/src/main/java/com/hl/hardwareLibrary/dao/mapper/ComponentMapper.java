@@ -7,5 +7,7 @@ import com.hl.hardwareLibrary.dao.domain.ext.ComponentView;
 import java.util.List;
 
 public interface ComponentMapper extends MyMapper<Component> {
-    List<ComponentView> findContentInfo();
+    List<ComponentView> findContentInfo(List<Long> ids);
+
+    ComponentView findViewById(Long id);
 }

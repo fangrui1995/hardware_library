@@ -2,12 +2,11 @@ package com.hl.hardwareLibrary.dao.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
@@ -36,10 +35,29 @@ public class SysUser implements Serializable {
     private String account;
 
     /**
+     * 学生id
+     */
+    @Column(name = "person_id")
+    @ApiModelProperty("学生id")
+    private String personId;
+
+    /**
      * 密码
      */
     @ApiModelProperty("密码")
     private String password;
+
+    /**
+     * 用户学校
+     */
+    @ApiModelProperty("用户学校")
+    private String school;
+
+    /**
+     * 用户email
+     */
+    @ApiModelProperty("用户email")
+    private String email;
 
     /**
      * 当前角色使用的角色id
@@ -47,8 +65,6 @@ public class SysUser implements Serializable {
     @Column(name = "role_id")
     @ApiModelProperty("当前角色使用的角色id")
     private Integer roleId;
-
-
 
     /**
      * 1正常 2禁用  3 其他
@@ -90,7 +106,6 @@ public class SysUser implements Serializable {
     @Column(name = "update_time")
     @ApiModelProperty("更新时间")
     private Date updateTime;
-
 
     private static final long serialVersionUID = 1L;
 }
