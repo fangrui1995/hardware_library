@@ -49,6 +49,7 @@ public class ComponentInventoryService {
     public Result insertInventory(ComponentInventory componentInventory) {
 
         componentInventory.setCreatetime(new Date());
+        componentInventory.setStatusInfo(InventoryEnum.STOCK.getKey());
         componentInventoryMapper.insert(componentInventory);
         return new Result("新增成功");
     }

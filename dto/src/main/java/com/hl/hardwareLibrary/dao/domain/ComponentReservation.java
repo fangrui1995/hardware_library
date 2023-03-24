@@ -79,14 +79,14 @@ public class ComponentReservation implements Serializable {
      */
     @Column(name = "due_date")
     @ApiModelProperty("计划归还时间")
-    private Date dueDate;
+    private String dueDate;
 
     /**
      * 实际归还时间
      */
     @Column(name = "return_date")
     @ApiModelProperty("实际归还时间")
-    private Date returnDate;
+    private String returnDate;
 
     @Column(name = "createTime")
     @ApiModelProperty("")

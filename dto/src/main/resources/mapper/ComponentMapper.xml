@@ -22,11 +22,29 @@
       WHERE a.status_info = '1'
     <if test="ids != null and ids.size() != 0 ">
       AND a.id IN
-      <foreach close=")" collection="ids" item="id" open="(" separator=",">
+      <foreach close=")" collection="list" item="id" open="(" separator=",">
         #{id}
       </foreach>
     </if>
       GROUP BY a.id
+  </select>
+
+
+
+
+  <select id="findContentInfoLike" resultType="com.hl.hardwareLibrary.dao.domain.ext.ComponentView">
+    SELECT a.*,COUNT(b.serial_number) count from component a LEFT JOIN component_inventory b on a.id = b.component_id and b.status_info = '1'
+    WHERE a.status_info = '1'
+    <if test="name != null and name != '' ">
+      AND a.name like concat('%',#{name},'%')
+    </if>
+    <if test="list != null and list.size() != 0 ">
+      AND a.id IN
+      <foreach close=")" collection="list" item="id" open="(" separator=",">
+        #{id}
+      </foreach>
+    </if>
+    GROUP BY a.id
   </select>
 
   <select id="findViewById" resultType="com.hl.hardwareLibrary.dao.domain.ext.ComponentView">

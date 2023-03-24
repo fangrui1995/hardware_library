@@ -24,9 +24,9 @@ public class ComponentService {
     @Autowired
     private ComponentInventoryMapper componentInventoryMapper;
 
-    public Result findContentInfo() {
+    public Result findContentInfo(String name) {
 
-        List<ComponentView> componentViewList = componentMapper.findContentInfo(null);
+        List<ComponentView> componentViewList = componentMapper.findContentInfoLike(null,name);
         return new Result(componentViewList);
 
     }

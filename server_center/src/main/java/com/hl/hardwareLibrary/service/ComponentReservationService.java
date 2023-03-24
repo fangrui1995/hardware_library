@@ -17,10 +17,10 @@ public class ComponentReservationService {
     @Autowired
     private ComponentReservationMapper componentReservationMapper;
 
-    public Result findList() {
+    public Result findList(String name) {
 
         Example example = new Example(ComponentReservation.class);
-        example.createCriteria().andNotEqualTo("statusInfo", ReservationEnum.DISABLE.getKey());
+        example.createCriteria().andNotEqualTo("statusInfo", ReservationEnum.DISABLE.getKey()).andLike("componentName","%"+name+"%");
         example.setOrderByClause("createTime desc");
 
         List<ComponentReservation> componentReservations = componentReservationMapper.selectByExample(example);

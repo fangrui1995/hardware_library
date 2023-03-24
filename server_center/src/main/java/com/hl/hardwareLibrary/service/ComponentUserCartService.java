@@ -33,14 +33,18 @@ public class ComponentUserCartService {
         componentUserCart.setUserId(userId);
         List<ComponentUserCart> select = componentUserCartMapper.select(componentUserCart);
 
-        List<Long> componentIds = new ArrayList<>();
+        if (CollUtil.isEmpty(select)){
+            return new Result(201,"该用户收藏列表为空");
+        }
+
+        List<Long> list = new ArrayList<>();
         if(CollUtil.isNotEmpty(select)){
             for (ComponentUserCart userCart : select) {
-                componentIds.add(userCart.getComponentId());
+                list.add(userCart.getComponentId());
             }
         }
         //查询对应组件信息
-        List<ComponentView> componentViewList = componentMapper.findContentInfo(componentIds);
+        List<ComponentView> componentViewList = componentMapper.findContentInfo(list);
 
         return new Result(componentViewList);
 

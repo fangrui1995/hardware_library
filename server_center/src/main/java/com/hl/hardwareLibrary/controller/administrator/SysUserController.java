@@ -2,6 +2,7 @@ package com.hl.hardwareLibrary.controller.administrator;
 
 import com.hl.hardwareLibrary.common.Result;
 import com.hl.hardwareLibrary.dao.domain.SysUser;
+import com.hl.hardwareLibrary.model.LoginParam;
 import com.hl.hardwareLibrary.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,12 @@ public class SysUserController {
         return sysUserService.findList();
     }
 
+
+    @ApiOperation("登录接口")
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginParam loginParam) {
+        return sysUserService.login(loginParam);
+    }
 
 
     @ApiOperation("删除用户信息")

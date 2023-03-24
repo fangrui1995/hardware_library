@@ -39,8 +39,8 @@ CREATE TABLE `component_reservation`
     `user_school`    varchar(200) NOT NULL COMMENT '用户学校',
     `user_email`     varchar(200) NOT NULL COMMENT '用户email',
     `status_info`    int(11) DEFAULT NULL COMMENT '1-申请 2-同意 3-拒绝 4-借出中 5-回收 6-删除',
-    `due_date`       datetime     DEFAULT NULL COMMENT '计划归还时间',
-    `return_date`    datetime     DEFAULT NULL COMMENT '实际归还时间',
+    `due_date`       varchar(200)     DEFAULT NULL COMMENT '计划归还时间',
+    `return_date`    varchar(200)     DEFAULT NULL COMMENT '实际归还时间',
     `createTime`     datetime     DEFAULT CURRENT_TIMESTAMP,
     `updateTime`     datetime     DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE

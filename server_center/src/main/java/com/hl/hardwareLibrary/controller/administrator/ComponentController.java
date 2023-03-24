@@ -21,8 +21,8 @@ public class ComponentController {
 
     @ApiOperation("查询组件信息内容(首页内容)")
     @GetMapping("/findContentInfo")
-    public Result findContentInfo() {
-        return componentService.findContentInfo();
+    public Result findContentInfo(@RequestParam(required = false,defaultValue = "") String name) {
+        return componentService.findContentInfo(name);
     }
 
 

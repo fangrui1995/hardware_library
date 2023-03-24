@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/reservation")
 @Api(value = "ReservationController", tags = {"预定接口"}, produces = MediaType.APPLICATION_JSON_VALUE)
-public class ReservationController {
+public class ComponentReservationController {
 
     @Autowired
     private ComponentReservationService componentReservationService;
@@ -21,8 +21,8 @@ public class ReservationController {
 
     @ApiOperation("查询组件预定列表")
     @GetMapping("/findList")
-    public Result findList() {
-        return componentReservationService.findList();
+    public Result findList(@RequestParam(required = false,defaultValue = "") String name) {
+        return componentReservationService.findList(name);
     }
 
 
