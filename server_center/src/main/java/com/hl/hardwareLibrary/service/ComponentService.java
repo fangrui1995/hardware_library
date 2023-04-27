@@ -10,19 +10,18 @@ import com.hl.hardwareLibrary.dao.domain.ext.ComponentView;
 import com.hl.hardwareLibrary.enums.CommonEnum;
 import com.hl.hardwareLibrary.enums.InventoryEnum;
 import com.hl.hardwareLibrary.model.ComponentParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ComponentService {
 
     @Autowired
@@ -60,17 +59,23 @@ public class ComponentService {
         //修改库存信息
         List<ComponentInventory> identifies = componentParam.getIdentifies();
 
+        //删除历史信息
+        Example example = new Example(ComponentInventory.class);
+        example.createCriteria().andEqualTo("componentId",componentParam.getId());
+        componentInventoryMapper.deleteByExample(example);
+
         if(CollectionUtil.isNotEmpty(identifies)){
-
-            //删除历史信息
-
-            Example example = new Example(ComponentInventory.class);
-            example.createCriteria().andEqualTo("componentId",componentParam.getId());
-            componentInventoryMapper.deleteByExample(example);
 
             for (ComponentInventory identify : identifies) {
 
                 if(StringUtil.isEmpty(identify.getSerialNumber())){
+                    log.info("序列号为空");
+                    continue;
+                }
+
+                ComponentInventory componentInventory = componentInventoryMapper.selectByPrimaryKey(identify.getSerialNumber());
+                if(null!=componentInventory){
+                    log.info("序列号重复");
                     continue;
                 }
                 identify.setComponentId(componentParam.getId());
@@ -126,6 +131,11 @@ public class ComponentService {
                     continue;
                 }
 
+                ComponentInventory componentInventory = componentInventoryMapper.selectByPrimaryKey(identify.getSerialNumber());
+                if(null!=componentInventory){
+                    continue;
+                }
+
                 identify.setComponentId(component.getId());
                 identify.setComponentName(componentParam.getName());
                 identify.setCreatetime(date);
@@ -152,7 +162,7 @@ public class ComponentService {
         example.setOrderByClause("createTime desc");
         List<ComponentInventory> list = componentInventoryMapper.selectByExample(example);
 
-        componentView.setComponentInventories(list);
+        componentView.setIdentifies(list);
 
         return new Result(componentView);
 

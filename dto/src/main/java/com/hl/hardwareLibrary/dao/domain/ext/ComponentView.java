@@ -11,5 +11,5 @@ public class ComponentView extends Component {
 
     private Integer count;
 
-    private List<ComponentInventory> componentInventories;
+    private List<ComponentInventory> identifies;
 }
