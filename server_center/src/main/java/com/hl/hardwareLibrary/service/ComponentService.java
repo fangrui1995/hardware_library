@@ -1,5 +1,6 @@
 package com.hl.hardwareLibrary.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.hl.hardwareLibrary.common.Result;
 import com.hl.hardwareLibrary.dao.domain.Component;
 import com.hl.hardwareLibrary.dao.domain.ComponentInventory;
@@ -8,10 +9,16 @@ import com.hl.hardwareLibrary.dao.mapper.ComponentMapper;
 import com.hl.hardwareLibrary.dao.domain.ext.ComponentView;
 import com.hl.hardwareLibrary.enums.CommonEnum;
 import com.hl.hardwareLibrary.enums.InventoryEnum;
+import com.hl.hardwareLibrary.model.ComponentParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,8 +38,9 @@ public class ComponentService {
 
     }
 
-    public Result updateContent(Component component, Long id) {
+    public Result updateContent(ComponentParam componentParam, Long id) {
 
+        Date date = new Date();
         if(null!=id){
             Component one = componentMapper.selectByPrimaryKey(id);
             if(null==one){
@@ -43,9 +51,37 @@ public class ComponentService {
         }
 
 
+        Component component = new Component();
+        BeanUtils.copyProperties(componentParam, component);
         component.setId(id);
-        component.setUpdatetime(new Date());
+        component.setUpdatetime(date);
         componentMapper.updateByPrimaryKeySelective(component);
+
+        //修改库存信息
+        List<ComponentInventory> identifies = componentParam.getIdentifies();
+
+        if(CollectionUtil.isNotEmpty(identifies)){
+
+            //删除历史信息
+
+            Example example = new Example(ComponentInventory.class);
+            example.createCriteria().andEqualTo("componentId",componentParam.getId());
+            componentInventoryMapper.deleteByExample(example);
+
+            for (ComponentInventory identify : identifies) {
+
+                if(StringUtil.isEmpty(identify.getSerialNumber())){
+                    continue;
+                }
+                identify.setComponentId(componentParam.getId());
+                identify.setComponentName(componentParam.getName());
+                identify.setCreatetime(date);
+                identify.setStatusInfo(InventoryEnum.STOCK.getKey());
+                componentInventoryMapper.insert(identify);
+            }
+        }
+
+
         return new Result("修改成功");
     }
 
@@ -62,11 +98,47 @@ public class ComponentService {
         return new Result("删除成功");
     }
 
-    public Result insertContent(Component component) {
+    public Result insertContent(ComponentParam componentParam) {
 
+        Date date = new Date();
+
+        Component component = new Component();
+        BeanUtils.copyProperties(componentParam, component);
         component.setStatusInfo(CommonEnum.ENABLE.getKey());
         component.setCreatetime(new Date());
-        componentMapper.insert(component);
+        componentMapper.insertUseGeneratedKeys(component);
+
+
+        //修改库存信息
+        List<ComponentInventory> identifies = componentParam.getIdentifies();
+
+        if(CollectionUtil.isNotEmpty(identifies)){
+
+            //删除历史信息
+
+            Example example = new Example(ComponentInventory.class);
+            example.createCriteria().andEqualTo("componentId",componentParam.getId());
+            componentInventoryMapper.deleteByExample(example);
+
+            for (ComponentInventory identify : identifies) {
+
+                if(StringUtil.isEmpty(identify.getSerialNumber())){
+                    continue;
+                }
+
+                identify.setComponentId(component.getId());
+                identify.setComponentName(componentParam.getName());
+                identify.setCreatetime(date);
+                identify.setStatusInfo(InventoryEnum.STOCK.getKey());
+
+                componentInventoryMapper.insert(identify);
+            }
+
+
+        }
+
+
+
         return new Result("新增成功");
     }
 
@@ -75,7 +147,7 @@ public class ComponentService {
         ComponentView componentView = componentMapper.findViewById(id);
 
         Example example = new Example(ComponentInventory.class);
-        example.createCriteria().andNotEqualTo("statusInfo", InventoryEnum.DISABLE.getKey());
+        example.createCriteria().andEqualTo("componentId",id).andNotEqualTo("statusInfo", InventoryEnum.DISABLE.getKey());
 
         example.setOrderByClause("createTime desc");
         List<ComponentInventory> list = componentInventoryMapper.selectByExample(example);

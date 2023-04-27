@@ -2,6 +2,7 @@ package com.hl.hardwareLibrary.controller.administrator;
 
 import com.hl.hardwareLibrary.common.Result;
 import com.hl.hardwareLibrary.dao.domain.Component;
+import com.hl.hardwareLibrary.model.ComponentParam;
 import com.hl.hardwareLibrary.service.ComponentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,9 @@ public class ComponentController {
 
     @ApiOperation("修改组件信息内容")
     @PostMapping("/updateContent/{id}")
-    public Result updateContent(@ApiParam @RequestBody Component component,
+    public Result updateContent(@ApiParam @RequestBody ComponentParam componentParam,
                                 @PathVariable Long id) {
-        return componentService.updateContent(component,id);
+        return componentService.updateContent(componentParam,id);
     }
 
 
@@ -51,8 +52,8 @@ public class ComponentController {
 
     @ApiOperation("新增组件信息内容")
     @PostMapping("/insertContent")
-    public Result insertContent(@ApiParam @RequestBody Component component) {
-        return componentService.insertContent(component);
+    public Result insertContent(@ApiParam @RequestBody ComponentParam componentParam) {
+        return componentService.insertContent(componentParam);
     }
 
 }
